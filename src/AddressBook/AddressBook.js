@@ -1,34 +1,8 @@
 import React, { useState } from 'react';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import './AddressBook.css'
 import AddressForm from './AddressForm';
-
-const fields = [
-  'firstName', 'lastName', 'street', 'suburb', 'postcode'
-];
-
-function Address({ address, onRemove }) {
-  return (
-    <tr>
-      {fields.map(field => <td key={field}>{address[field]}</td>)}
-      <td key='remove'>
-        <input type="button" value="Remove" onClick={() => onRemove(address.id)}/>
-      </td>
-    </tr>
-  )
-}
-
-function AddressTable({ addresses, onRemove }) {
-  return (
-    <table>
-      <thead>
-        <tr>{fields.map(field => <th key={field}>{field}</th>)}</tr>
-      </thead>
-      <tbody>
-        {addresses.map(address => <Address key={address.id} address={address} onRemove={onRemove} />)}
-      </tbody>
-    </table>
-  )
-}
+import AddressList from './AddressList';
 
 function CompareDetails(lhs, rhs) {
   if (lhs.lastName < rhs.lastName) {
@@ -50,6 +24,7 @@ function CompareDetails(lhs, rhs) {
 
 function AddressBook({ data }) {
   const [addresses, setAddresses] = useState(data);
+  const [showForm, setShowForm] = useState(false);
 
   const onCreateAddress = (newAddress) => {
     let newAddresses = addresses.concat(newAddress);
@@ -62,12 +37,25 @@ function AddressBook({ data }) {
     setAddresses(newAddresses);
   };
 
+  const handleCloseModal = () => setShowForm(false);
+  const handleOpenForm = () => setShowForm(true);
+
   return (
-    <div className="AddressBook">
+    <Container>
       <h2>Address Book</h2>
-      <AddressForm saveHandler={onCreateAddress}/>
-      <AddressTable addresses={addresses} onRemove={onRemove} />
-    </div>
+      <Row>
+        <Col>
+          <Button onClick={handleOpenForm} disabled={showForm}>Add new contact</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {addresses.length > 0 && <AddressList addresses={addresses} onRemove={onRemove} />}
+          {addresses.length === 0 && <p>You have no contacts in your address book</p>}
+        </Col>
+      </Row>
+      <AddressForm show={showForm} saveHandler={onCreateAddress} closeHandler={handleCloseModal} />
+    </Container>
   );
 }
 
