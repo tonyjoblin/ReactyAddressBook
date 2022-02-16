@@ -5,17 +5,17 @@ import AddressForm from './AddressForm';
 import AddressList from './AddressList';
 
 function CompareDetails(lhs, rhs) {
-  if (lhs.lastName < rhs.lastName) {
+  if (lhs.last_name < rhs.last_name) {
     return -1;
   }
-  if (lhs.lastName > rhs.lastName) {
+  if (lhs.last_name > rhs.last_name) {
     return +1;
   }
 
-  if (lhs.firstName < rhs.firstName) {
+  if (lhs.first_name < rhs.first_name) {
     return -1;
   }
-  if (lhs.firstName > rhs.firstName) {
+  if (lhs.first_name > rhs.first_name) {
     return +1;
   }
 
@@ -23,7 +23,7 @@ function CompareDetails(lhs, rhs) {
 }
 
 function AddressBook({ data }) {
-  const [addresses, setAddresses] = useState(data);
+  const [addresses, setAddresses] = useState(data.sort(CompareDetails));
   const [showForm, setShowForm] = useState(false);
 
   const onCreateAddress = (newAddress) => {

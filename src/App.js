@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import './App.css';
 import AddressBook from './AddressBook/AddressBook';
-import { addresses } from './data/addresses';
+import addresses from './data/MOCK_DATA.json';
 
 function App() {
   return (

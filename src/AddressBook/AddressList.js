@@ -1,11 +1,7 @@
 import React from 'react';
 import { Table, CloseButton } from 'react-bootstrap';
 import './AddressBook.css'
-import { fieldDisplayNames  } from './config';
-
-const fields = [
-  'firstName', 'lastName', 'street', 'suburb', 'postcode'
-];
+import { fields, fieldDisplayNames  } from './config';
 
 function Address({ address, onRemove }) {
   return (
